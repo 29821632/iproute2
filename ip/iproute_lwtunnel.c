@@ -566,9 +566,9 @@ static void print_encap_mpls(FILE *fp, struct rtattr *encap)
 
 	parse_rtattr_nested(tb, MPLS_IPTUNNEL_MAX, encap);
 
-	if (tb[MPLS_IPTUNNEL_DST])
-		print_string(PRINT_ANY, "dst", " %s ",
-			format_host_rta(AF_MPLS, tb[MPLS_IPTUNNEL_DST]));
+	if (tb[MPLS_IPTUNNEL_LABEL])
+		print_string(PRINT_ANY, "label", "%s ",
+			format_host_rta(AF_MPLS, tb[MPLS_IPTUNNEL_LABEL]));
 	if (tb[MPLS_IPTUNNEL_TTL])
 		print_uint(PRINT_ANY, "ttl", "ttl %u ",
 			rta_getattr_u8(tb[MPLS_IPTUNNEL_TTL]));
@@ -1531,7 +1531,7 @@ static int parse_encap_mpls(struct rtattr *rta, size_t len,
 		exit(1);
 	}
 
-	if (rta_addattr_l(rta, len, MPLS_IPTUNNEL_DST,
+	if (rta_addattr_l(rta, len, MPLS_IPTUNNEL_LABEL,
 			  &addr.data, addr.bytelen))
 		return -1;
 
